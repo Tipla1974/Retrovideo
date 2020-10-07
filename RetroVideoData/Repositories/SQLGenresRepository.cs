@@ -1,6 +1,7 @@
 ﻿using RetroVideoData.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace RetroVideoData.Repositories
@@ -13,14 +14,15 @@ namespace RetroVideoData.Repositories
         {
             this.context = context;
         }
-        public Genres Get(int Id)
+        public Genre Get(int Id)
         {
             return context.Genres.Find(Id);
         }
 
-        public IEnumerable<Genres> Getall()
+        public IEnumerable<Genre> Getall()
         {
-            return context.Genres;
+            return context.Genres
+                .OrderBy(r => r.Naam) ;
         }
     }
 }

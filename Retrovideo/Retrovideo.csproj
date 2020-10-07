@@ -21,6 +21,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\RetroVideoData\RetroVideoData.csproj" />
+    <ProjectReference Include="..\RetroVideoServices\RetroVideoServices.csproj" />
   </ItemGroup>
 
 </Project>

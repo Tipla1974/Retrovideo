@@ -1,14 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using RetroVideoData.Models;
+using RetroVideoData.Repositories;
 
 namespace RetroVideoServices
-
-
-    private IGenresRepository genresRepository;
+{ 
     public class GenresServices
     {
-        private IGenresRepository genresRepository;
-        public 
+      private IGenreRepository genresRepository;
+        
+      public GenresServices(IGenreRepository genresRepository)
+        {
+            this.genresRepository = genresRepository;
+        }
+
+        public IEnumerable<Genre> GetAllGenres()
+        {
+            return genresRepository.Getall();
+        }
+        
     }
+
+  
 }

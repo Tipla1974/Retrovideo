@@ -6,21 +6,21 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Retrovideo.Models;
+using RetroVideoServices;
 
 namespace Retrovideo.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
+        private GenresServices genresServices;
+        public HomeController(GenresServices genresServices)
         {
-            _logger = logger;
+            this.genresServices = genresServices;
         }
 
         public IActionResult Index()
         {
-            return View();
+            return View(genresServices.GetAllGenres()) ;
         }
 
         public IActionResult Privacy()

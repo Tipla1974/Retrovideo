@@ -6,7 +6,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\RetroVideoData\RetroVideoData.csproj" />
-    <ProjectReference Include="..\Retrovideo\Retrovideo.csproj" />
   </ItemGroup>
 
 </Project>

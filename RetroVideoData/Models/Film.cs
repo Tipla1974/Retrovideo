@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace RetroVideoData.Models
 {
-    public class Films
+    [Table("Films")]
+    public class Film
     {
         public int Id { get; set; }
         public int GenreId { get; set; }

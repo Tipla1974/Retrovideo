@@ -5,7 +5,7 @@ using System.Text;
 
 namespace RetroVideoData.Models
 {
-    public class Klanten
+    public class Klant
     {
         public int Id { get; set; }
         [StringLength(30)]

@@ -7,7 +7,7 @@ namespace RetroVideoData.Repositories
 {
     public interface IGenreRepository
     {
-        Genres Get(int id);
-        IEnumerable<Genres> Getall();
+        Genre Get(int id);
+        IEnumerable<Genre> Getall();
     }
 }
