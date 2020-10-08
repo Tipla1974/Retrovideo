@@ -1,0 +1,28 @@
+﻿
+@model FilmDetailViewModel
+@{
+    ViewData["Title"] = "Film";
+}
+
+<h1>@Model.Naam</h1>
+<img src="@Url.Content(string.Format("~/images/{0}.jpg", Model.Id))" />
+<p><b>Prijs</b><br/>
+@Html.DisplayFor(m => Model.Prijs)
+</p>
+<p>
+    <b>Voorraad</b><br />
+    @Html.DisplayFor(m => Model.Voorraad)
+</p>
+<p>
+    <b>Gereserveerd</b><br />
+    @Html.DisplayFor(m => Model.Gereserveerd)
+</p>
+<p>
+    <b>Beschikbaar</b><br />
+    @Html.DisplayFor(m => Model.Beschikbaar)
+</p>
+@if (Model.Beschikbaar > 0)
+{
+    <a class="btn btn-lg btn-info" asp-action="InMandje"
+       asp-route-id="@Model.Id">In mandje</a>
+}

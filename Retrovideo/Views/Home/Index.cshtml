@@ -1,10 +1,11 @@
-﻿@using RetroVideoData.Models
+﻿@using RetroVideoData.Models 
 @model IEnumerable<Genre>
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Genre";
 }
-<h2>Genres</h2>
-@foreach( var genre in Model)
+
+<h1>Genre</h1>
+@foreach (var genre in Model)
 {
-    <a asp-action="Genre" asp-route-id="@genre.Id">@genre.Naam</a>
+    <a asp-action="genre" asp-route-id="@genre.Id">@genre.Naam</a>
 }

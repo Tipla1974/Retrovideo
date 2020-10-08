@@ -1,0 +1,20 @@
+﻿@model FilmPerGenreViewmodel
+@{
+    ViewData["Title"] = "Genre";
+}
+
+<h1>Genre</h1>
+@foreach (var genre in Model.Genres)
+{
+    <a asp-action="genre" asp-route-id="@genre.Id">@genre.Naam</a>
+}
+<br />
+<br />
+
+
+    @foreach (var film in Model.FilmsPerGenre)
+    {
+        <a asp-action="detail" asp-route-id="@film.Id">
+            <img src="@Url.Content(string.Format("~/images/{0}.jpg", film.Id))" />
+        </a>
+    }
