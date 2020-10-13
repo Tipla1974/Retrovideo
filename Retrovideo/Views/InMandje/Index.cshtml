@@ -1,0 +1,38 @@
+﻿
+@model InmandjeViewModel
+
+@{
+    ViewData["Title"] = "Mandje";
+}
+
+<h1>Mandje</h1>
+
+@if (Model.Mandje.Count() == 0)
+{
+    <p>Er zitten geen items in het mandje</p>
+}
+else
+{
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <td>Film</td>
+                <td>Prijs</td>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var item in Model.Mandje)
+            {
+            <tr>
+                <td>@item.Naam</td>
+                <td>@item.Prijs</td>
+                
+            </tr>
+            }
+            <tr>
+                <td>Totale Prijs</td>
+                <td>@ViewBag.TotalePrijs</td>
+            </tr>
+        </tbody>
+    </table>
+}

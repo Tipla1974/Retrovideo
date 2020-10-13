@@ -20,6 +20,10 @@ namespace RetroVideoServices
             return genresRepository.Getall();
         }
         
+        public Genre GetGenre(int Id)
+        {
+            return genresRepository.Get(Id);
+        }
     }
 
   

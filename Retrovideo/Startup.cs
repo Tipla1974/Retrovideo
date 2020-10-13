@@ -30,8 +30,10 @@ namespace Retrovideo
            options.UseSqlServer(
             Configuration.GetConnectionString("RetroVideoConnection"),
             x => x.MigrationsAssembly("RetroVideoData")));
+            services.AddTransient<KlantServices>();
             services.AddTransient<FilmServices>();
             services.AddTransient<GenresServices>();
+            services.AddTransient<IKlantRepository, SQLKlantRepository>();
             services.AddTransient<IFilmRepository, SQLFilmRepository>();
             services.AddTransient<IGenreRepository, SQLGenresRepository>();
              services.AddControllersWithViews();

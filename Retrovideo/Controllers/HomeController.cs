@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Retrovideo.Models;
+using RetroVideoData.Models;
 using RetroVideoServices;
 
 
@@ -13,17 +14,20 @@ namespace Retrovideo.Controllers
 {
     public class HomeController : Controller
     {
+        private static readonly ICollection<InMandje> Winkelmandje = new List<InMandje>();
         private GenresServices genresServices;
        
         private FilmServices filmServices;
+       
 
         public HomeController(GenresServices genresServices, FilmServices filmServices)
         {
             this.genresServices = genresServices;
             this.filmServices = filmServices;
+          
         }
 
-        public IActionResult Index(int Id)
+        public IActionResult Index()
         {
 
             return View( genresServices.GetAllGenres());
@@ -31,6 +35,8 @@ namespace Retrovideo.Controllers
        
         public IActionResult Genre(int Id)
         {
+            var genrenaam = genresServices.GetGenre(Id);
+            ViewBag.genre = genrenaam.Naam;
             return View(new FilmPerGenreViewmodel
             {
                 Genres = genresServices.GetAllGenres(),
@@ -51,7 +57,24 @@ namespace Retrovideo.Controllers
                 Gereserveerd = filmdetail.Gereserveerd,
                 Beschikbaar = filmdetail.Voorraad - filmdetail.Gereserveerd
             };
+            
             return View(FilmModel);
+        }
+
+        public IActionResult Inmandje(int Id)
+        {
+            var item = filmServices.GetFilmInfo(Id);
+            var inMandje = new InMandje
+            {
+
+                FilmId = item.Id,
+                Naam = item.Titel,
+                Prijs = item.Prijs
+            };
+            Winkelmandje.Add(inMandje);
+            ViewBag.Aantal = Winkelmandje.Count;
+
+            return View();
         }
 
         public IActionResult Privacy()

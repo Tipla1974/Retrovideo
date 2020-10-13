@@ -10,11 +10,18 @@
 }
 <br />
 <br />
-
-
+<h2>@ViewBag.genre </h2>
+<br />
+@if (Model.FilmsPerGenre.Count() == 0)
+{
+    <p>Voor dit genre hebben we helaas geen film in onze selectie zitte.</p>
+}
+else
+{
     @foreach (var film in Model.FilmsPerGenre)
     {
         <a asp-action="detail" asp-route-id="@film.Id">
             <img src="@Url.Content(string.Format("~/images/{0}.jpg", film.Id))" />
         </a>
     }
+}
