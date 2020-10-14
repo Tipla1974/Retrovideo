@@ -6,16 +6,28 @@ using Microsoft.AspNetCore.Mvc;
 using Retrovideo.Models;
 using RetroVideoData.Models;
 using RetroVideoServices;
+using Newtonsoft.Json;
+using Microsoft.AspNetCore.Http;
 
 namespace Retrovideo.Controllers
 {
     public class InMandjeController : Controller
     {
-        private static readonly ICollection<InMandje> Winkelmandje = new List<InMandje>();
+        
+        private FilmServices filmServices;
+        public InMandjeController( FilmServices filmServices)
+        {
+            
+            this.filmServices = filmServices;
+
+        }
+
         public IActionResult Index()
         {
-            @ViewBag.TotalePrijs = 0;
-            return View(new InmandjeViewModel { Mandje = Winkelmandje});
+            var mandjeSessionVariablel = HttpContext.Session.GetString("mandje");
+            var inmandje = JsonConvert.DeserializeObject<SortedSet<int>>(mandjeSessionVariablel);
+            // set weer ophalen uit de session
+            return View(filmServices.GetFilmInfo(inmandje)) ;
         }
     }
 }

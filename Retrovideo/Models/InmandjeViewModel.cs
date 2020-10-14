@@ -10,7 +10,7 @@ namespace Retrovideo.Models
 {
     public class InmandjeViewModel
     {
-        public IEnumerable<InMandje> Mandje { get; set; }
+        public SortedSet<int> Mandje { get; set; }
 
     }
 }

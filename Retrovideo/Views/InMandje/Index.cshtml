@@ -1,37 +1,37 @@
-﻿
-@model InmandjeViewModel
+﻿@using RetroVideoData.Models;
+@model IEnumerable<Film>
 
 @{
     ViewData["Title"] = "Mandje";
 }
 
 <h1>Mandje</h1>
-
-@if (Model.Mandje.Count() == 0)
+@{var totaal = 0m; }
+    @if (Model.Count() == 0)
 {
     <p>Er zitten geen items in het mandje</p>
 }
 else
 {
-    <table class="table table-bordered">
+    <table class="table table-striped">
         <thead>
             <tr>
-                <td>Film</td>
-                <td>Prijs</td>
+                <th>Film</th>
+                <th>Prijs</th>
             </tr>
         </thead>
         <tbody>
-            @foreach(var item in Model.Mandje)
+            @foreach (var item in Model)
             {
             <tr>
-                <td>@item.Naam</td>
+                <td>@item.Titel</td>
                 <td>@item.Prijs</td>
-                
+                @{totaal += @item.Prijs;} 
             </tr>
             }
             <tr>
                 <td>Totale Prijs</td>
-                <td>@ViewBag.TotalePrijs</td>
+                <td>@totaal</td>
             </tr>
         </tbody>
     </table>

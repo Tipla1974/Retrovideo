@@ -10,6 +10,7 @@ namespace Retrovideo.Models
     public class ZoekKlantViewModel
     {
         [Display(Name = "Familienaam bevat :")]
+        [Required(ErrorMessage = "Verplicht in te geven")]
         public string Letters { get; set; }
         public List<Klant> Klanten { get; set; }
     }

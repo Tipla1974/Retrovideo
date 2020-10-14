@@ -18,10 +18,17 @@ namespace RetroVideoData.Repositories
         {
             return context.Films.Find(Id);
         }
+
+        public IEnumerable<Film> GetFilmsMetId(SortedSet<int> lijst)
+        {
+            return context.Films
+                .Where(film => lijst.Contains(film.Id));
+        }
+
         public IEnumerable<Film> GetFilmsVanGenre(int genreId)
         {
             return context.Films
-                .Where(r => r.GenreId == genreId);
+                .Where(film => film.GenreId == genreId);
                 
         }
     }

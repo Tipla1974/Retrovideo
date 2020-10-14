@@ -25,6 +25,9 @@ namespace RetroVideoServices
         {
             return filmRepository.GetFilmsVanGenre(genreId);
         }
-
+        public IEnumerable<Film> GetFilmInfo(SortedSet<int> lijst)
+        {
+            return filmRepository.GetFilmsMetId(lijst);
+        }
     }
 }

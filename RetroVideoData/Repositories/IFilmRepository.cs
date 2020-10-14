@@ -9,5 +9,7 @@ namespace RetroVideoData.Repositories
     {
         Film GetFilmDetail(int Id);
         IEnumerable<Film> GetFilmsVanGenre(int genreId);
+
+        IEnumerable<Film> GetFilmsMetId(SortedSet<int> lijst);
     }
 }

@@ -11,6 +11,7 @@ using Microsoft.Extensions.Hosting;
 using RetroVideoData.Models;
 using RetroVideoData.Repositories;
 using RetroVideoServices;
+using Microsoft.AspNetCore.Http;
 
 namespace Retrovideo
 {
@@ -26,10 +27,14 @@ namespace Retrovideo
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            
             services.AddDbContext<RetrovideoDBContext>(options =>
            options.UseSqlServer(
             Configuration.GetConnectionString("RetroVideoConnection"),
             x => x.MigrationsAssembly("RetroVideoData")));
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddSession();
+
             services.AddTransient<KlantServices>();
             services.AddTransient<FilmServices>();
             services.AddTransient<GenresServices>();
@@ -54,6 +59,8 @@ namespace Retrovideo
             app.UseStaticFiles();
 
             app.UseRouting();
+            app.UseStaticFiles();
+            app.UseSession();
 
             app.UseAuthorization();
 

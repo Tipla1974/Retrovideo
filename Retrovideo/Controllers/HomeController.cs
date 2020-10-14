@@ -3,18 +3,19 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Retrovideo.Models;
 using RetroVideoData.Models;
 using RetroVideoServices;
-
+using Newtonsoft.Json;
 
 namespace Retrovideo.Controllers
 {
     public class HomeController : Controller
     {
-        private static readonly ICollection<InMandje> Winkelmandje = new List<InMandje>();
+        private SortedSet<int> inMandje = new SortedSet<int>();
         private GenresServices genresServices;
        
         private FilmServices filmServices;
@@ -63,18 +64,13 @@ namespace Retrovideo.Controllers
 
         public IActionResult Inmandje(int Id)
         {
-            var item = filmServices.GetFilmInfo(Id);
-            var inMandje = new InMandje
-            {
+            var mandje = HttpContext.Session.GetString("mandje");
+            if (!string.IsNullOrEmpty(mandje))
+            inMandje = JsonConvert.DeserializeObject<SortedSet<int>>(mandje);
+            inMandje.Add(Id);
+            HttpContext.Session.SetString("mandje", JsonConvert.SerializeObject(inMandje));
 
-                FilmId = item.Id,
-                Naam = item.Titel,
-                Prijs = item.Prijs
-            };
-            Winkelmandje.Add(inMandje);
-            ViewBag.Aantal = Winkelmandje.Count;
-
-            return View();
+            return RedirectToAction("index","InMandje");
         }
 
         public IActionResult Privacy()

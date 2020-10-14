@@ -1,0 +1,37 @@
+﻿@model ZoekKlantViewModel
+@{
+    ViewData["Title"] = "Zoekformulier";
+}
+<h2>Klanten</h2>
+<form asp-action="ZoekNaam" method="get">
+    <div>
+        <label asp-for="Letters"></label>
+        <input asp-for="Letters" />
+        <span asp-validation-for="Letters" class="text-danger"></span>
+    </div> <input type="submit" value="Zoeken" class="btn btn-primary mb-3 mt-2" />
+</form>
+
+@if (Model.Klanten != null)
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Naam</th>
+                <th>Straat - Huisnummer</th>
+                <th>Postcode</th>
+                <th>Gemeente</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var soort in Model.Klanten)
+            {
+                <tr>
+                    <td>@soort.Voornaam @soort.Familienaam </td>
+                    <td>@soort.StraatNummer</td>
+                    <td>@soort.Postcode </td>
+                    <td>@soort.Gemeente </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
