@@ -83,10 +83,9 @@ namespace Retrovideo.Controllers
                 {
                     if((film.Voorraad - film.Gereserveerd)> 0)
                     {
-                        var idFilm = film.Id;
-                        film.Gereserveerd += 1;
-                        //reservatie.Reservatiebijvoegen(film.Id, Id);
-                        filmServices.UpdateRecord(film.Id, film.Gereserveerd );
+                        var gereserveerdAantal = film.Gereserveerd + 1;
+                        reservatie.Reservatiebijvoegen(film.Id, Id);
+                        filmServices.UpdateRecord(film.Id, gereserveerdAantal);
                         inmandje.Remove(film.Id);
                     }                 
                 }
