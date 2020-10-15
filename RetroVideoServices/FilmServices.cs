@@ -29,5 +29,9 @@ namespace RetroVideoServices
         {
             return filmRepository.GetFilmsMetId(lijst);
         }
+        public void UpdateRecord(int filmId, int aantalGereserveerd)
+        {
+            filmRepository.update(filmId, aantalGereserveerd);
+        }
     }
 }

@@ -14,11 +14,16 @@ namespace RetroVideoData.Repositories
             this.context = context;
         }
 
+        public Klant GetKlantInfo(int Id)
+        {
+            return context.Klanten.Find(Id);
+        }
+
         IEnumerable<Klant> IKlantRepository.Getall(string Letters)
         {
             return context.Klanten
-                .OrderBy(k => k.Familienaam)
-                .Where(k => k.Familienaam.Contains(Letters));
+                .OrderBy(klant => klant.Familienaam)
+                .Where(klant => klant.Familienaam.Contains(Letters));
             
         }
     }

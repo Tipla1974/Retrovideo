@@ -1,0 +1,11 @@
+﻿
+@model BevestigingViewModel
+@{
+    ViewData["Title"] = "KlantBevestiging";
+}
+<h1>Bevestiging</h1>
+
+@ViewBag.AantalInMandje film(s) voor @Model.Naam
+<br />
+<a class="btn btn-lg btn-info" asp-action="ReservatieBevestigd"
+   asp-route-id="@Model.Id">Bevestigen</a>

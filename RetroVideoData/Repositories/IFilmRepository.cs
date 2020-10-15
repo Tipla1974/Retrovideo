@@ -11,5 +11,7 @@ namespace RetroVideoData.Repositories
         IEnumerable<Film> GetFilmsVanGenre(int genreId);
 
         IEnumerable<Film> GetFilmsMetId(SortedSet<int> lijst);
+
+        void update(int filmId, int statusGereserveerd);
     }
 }

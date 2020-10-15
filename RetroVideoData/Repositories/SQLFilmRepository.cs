@@ -31,5 +31,12 @@ namespace RetroVideoData.Repositories
                 .Where(film => film.GenreId == genreId);
                 
         }
+
+        public void update(int filmId, int statusGereserveerd)
+        {
+            var item = context.Films.Find(filmId);
+            item.Gereserveerd = statusGereserveerd;
+            context.SaveChanges();
+        }
     }
 }

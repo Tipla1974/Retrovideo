@@ -34,10 +34,12 @@ namespace Retrovideo
             x => x.MigrationsAssembly("RetroVideoData")));
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddSession();
-
+            services.AddTransient<ReservatieService>();
+            
             services.AddTransient<KlantServices>();
             services.AddTransient<FilmServices>();
             services.AddTransient<GenresServices>();
+            services.AddTransient<IReservatieRepository, SQLReservatieRepository>();
             services.AddTransient<IKlantRepository, SQLKlantRepository>();
             services.AddTransient<IFilmRepository, SQLFilmRepository>();
             services.AddTransient<IGenreRepository, SQLGenresRepository>();

@@ -10,14 +10,14 @@ namespace RetroVideoData.Models
         public DbSet<Film> Films { get; set; }
         public DbSet<Genre> Genres { get; set; }
         public DbSet<Klant> Klanten { get; set; }
-        public DbSet<Reservaties> Reservaties { get; set; }
+        public DbSet<Reservatie> Reservaties { get; set; }
         
 
         public RetrovideoDBContext() { }
         public RetrovideoDBContext(DbContextOptions options) : base(options) { }
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            builder.Entity<Reservaties>().HasKey(r => new { r.KlantId, r.FilmId, r.Reservatie });
+            builder.Entity<Reservatie>().HasKey(r => new { r.KlantId, r.FilmId, r.ReservatieDatum });
 
 
 

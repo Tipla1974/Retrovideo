@@ -1,0 +1,18 @@
+﻿@using RetroVideoData.Models 
+@model IEnumerable<Film>
+@{
+    ViewData["Title"] = "ReservatieBevestigd";
+}
+
+<h1>Bevestigen</h1>
+@if (ViewBag.geslaagd)
+{
+    <p>De reservatie is Geslaagd</p>
+}
+else
+{
+    foreach(var item in Model)
+    {
+        <p>item.Titel;</p>
+    }
+}

@@ -18,5 +18,9 @@ namespace RetroVideoServices
         {
             return klantRepository.Getall(Letters);
         }
+        public Klant GetklantInfo(int Id)
+        {
+            return klantRepository.GetKlantInfo(Id);
+        }
     }
 }

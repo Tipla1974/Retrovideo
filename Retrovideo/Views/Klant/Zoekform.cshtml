@@ -23,13 +23,16 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var soort in Model.Klanten)
+            @foreach (var data in Model.Klanten)
             {
                 <tr>
-                    <td>@soort.Voornaam @soort.Familienaam </td>
-                    <td>@soort.StraatNummer</td>
-                    <td>@soort.Postcode </td>
-                    <td>@soort.Gemeente </td>
+                    <td>
+                        <a asp-action="Klantbevestiging"
+                           asp-route-id="@data.Id">@data.Voornaam @data.Familienaam</a>
+                    </td>
+                    <td>@data.StraatNummer</td>
+                    <td>@data.Postcode </td>
+                    <td>@data.Gemeente </td>
                 </tr>
             }
         </tbody>

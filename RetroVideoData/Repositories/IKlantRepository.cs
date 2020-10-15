@@ -8,5 +8,7 @@ namespace RetroVideoData.Repositories
     public interface IKlantRepository
     {
         IEnumerable<Klant> Getall(string Letters);
+
+        Klant GetKlantInfo(int Id);
     }
 }
