@@ -20,14 +20,17 @@ namespace Retrovideo.Controllers
         private KlantServices klantServices;
         private FilmServices filmServices;
         private ReservatieService reservatie;
+        private RetrovideoDBContext context;
 
-        public KlantController(RetrovideoDBContext retrovideoDBContext, KlantServices klantServices, FilmServices filmServices, ReservatieService reservatie)
+        public KlantController(RetrovideoDBContext retrovideoDBContext, KlantServices klantServices, FilmServices filmServices, ReservatieService reservatie, RetrovideoDBContext context)
         {
             this.klantServices = klantServices;
             this.retrovideoDBContext = retrovideoDBContext;
             this.filmServices = filmServices;
             this.reservatie = reservatie;
+            this.context = context;
         }
+
 
         
         public IActionResult Index()
@@ -72,13 +75,14 @@ namespace Retrovideo.Controllers
             ViewBag.geslaagd = false;
             try
             {
-                
+
                 var transactionOptions = new TransactionOptions
                 {
                     IsolationLevel = System.Transactions.IsolationLevel.RepeatableRead
                 };
-                var transactionScope = new TransactionScope(TransactionScopeOption.Required, transactionOptions);
+                using var transactionScope = new TransactionScope(TransactionScopeOption.Required, transactionOptions);
                 
+                //using var
                 foreach(var film in FilmLijst)
                 {
                     if((film.Voorraad - film.Gereserveerd)> 0)
@@ -89,6 +93,7 @@ namespace Retrovideo.Controllers
                         inmandje.Remove(film.Id);
                     }                 
                 }
+                context.SaveChanges();
                 transactionScope.Complete();
             }
             catch (Exception)

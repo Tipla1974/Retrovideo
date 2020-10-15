@@ -36,7 +36,7 @@ namespace RetroVideoData.Repositories
         {
             var item = context.Films.Find(filmId);
             item.Gereserveerd = statusGereserveerd;
-            context.SaveChanges();
+            
         }
     }
 }

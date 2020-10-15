@@ -17,7 +17,7 @@ namespace RetroVideoData.Models
         public RetrovideoDBContext(DbContextOptions options) : base(options) { }
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            builder.Entity<Reservatie>().HasKey(r => new { r.KlantId, r.FilmId, r.ReservatieDatum });
+            builder.Entity<Reservatie>().HasKey(r => new { r.KlantId, r.FilmId, r.Tijdstip });
 
 
 

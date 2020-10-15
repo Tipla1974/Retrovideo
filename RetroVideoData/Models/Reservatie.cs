@@ -11,7 +11,7 @@ namespace RetroVideoData.Models
     {
         public int KlantId { get; set; }
         public int FilmId { get; set; }
-        [Column("Reservatie")]
-        public DateTime ReservatieDatum { get; set; }
+        
+        public DateTime Tijdstip { get; set; }
     }
 }

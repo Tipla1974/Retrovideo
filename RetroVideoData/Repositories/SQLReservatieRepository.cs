@@ -17,7 +17,7 @@ namespace RetroVideoData.Repositories
         public void Add(Reservatie nieuweReservatie)
         {
             context.Reservaties.Add(nieuweReservatie);
-            context.SaveChanges();
+            
         }
     }
 }

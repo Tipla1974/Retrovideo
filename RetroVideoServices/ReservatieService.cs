@@ -24,7 +24,7 @@ namespace RetroVideoServices
             {
                 FilmId = filmId,
                 KlantId = klantId,
-                ReservatieDatum = DateTime.Now
+                Tijdstip = DateTime.Now
             }) ;
             
             
