@@ -3,6 +3,7 @@ using RetroVideoData.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace RetroVideoServices
 {
@@ -14,13 +15,14 @@ namespace RetroVideoServices
         {
             this.klantRepository = klantRepository;
         }
-        public IEnumerable<Klant> GetKlanten (string Letters)
+        public async Task<IEnumerable<Klant>> GetKlanten (string Letters)
         {
-            return klantRepository.Getall(Letters);
+            return await klantRepository.Getall(Letters);
+                    
         }
-        public Klant GetklantInfo(int Id)
+        public async Task<Klant> GetklantInfo(int Id)
         {
-            return klantRepository.GetKlantInfo(Id);
+            return await klantRepository.GetKlantInfo(Id);
         }
     }
 }

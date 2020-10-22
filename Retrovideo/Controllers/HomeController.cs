@@ -10,12 +10,13 @@ using Retrovideo.Models;
 using RetroVideoData.Models;
 using RetroVideoServices;
 using Newtonsoft.Json;
+using System.Threading.Tasks;
 
 namespace Retrovideo.Controllers
 {
     public class HomeController : Controller
     {
-        private SortedSet<int> inMandje = new SortedSet<int>();
+       
         private GenresServices genresServices;
        
         private FilmServices filmServices;
@@ -28,26 +29,26 @@ namespace Retrovideo.Controllers
           
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
 
-            return View( genresServices.GetAllGenres());
+            return View( await genresServices.GetAllGenres());
         }
        
-        public IActionResult Genre(int Id)
+        public async Task<IActionResult> Genre(int Id)
         {
-            var genrenaam = genresServices.GetGenre(Id);
+            var genrenaam = await genresServices.GetGenre(Id);
             ViewBag.genre = genrenaam.Naam;
-            return View(new FilmPerGenreViewmodel
+            return View( new FilmPerGenreViewmodel
             {
-                Genres = genresServices.GetAllGenres(),
-                FilmsPerGenre = filmServices.GetAlleFilmsPerGenre(Id)
+                Genres = await genresServices.GetAllGenres(),
+                FilmsPerGenre = await filmServices.GetAlleFilmsPerGenre(Id)
             });
         }
 
-        public IActionResult Detail(int Id)
+        public async Task<IActionResult> Detail(int Id)
         {
-            var filmdetail = filmServices.GetFilmInfo(Id);
+            var filmdetail = await filmServices.GetFilmInfo(Id);
             var FilmModel = new FilmDetailViewModel
             {
                 Id = Id,
@@ -59,11 +60,12 @@ namespace Retrovideo.Controllers
                 Beschikbaar = filmdetail.Voorraad - filmdetail.Gereserveerd
             };
             
-            return View(FilmModel);
+            return View( FilmModel);
         }
 
         public IActionResult Inmandje(int Id)
         {
+            SortedSet<int> inMandje = new SortedSet<int>();
             var mandje = HttpContext.Session.GetString("mandje");
             if (!string.IsNullOrEmpty(mandje))
             inMandje = JsonConvert.DeserializeObject<SortedSet<int>>(mandje);

@@ -1,8 +1,10 @@
-﻿using RetroVideoData.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using RetroVideoData.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace RetroVideoData.Repositories
 {
@@ -14,29 +16,34 @@ namespace RetroVideoData.Repositories
             this.context = context;
         }
 
-        public Film GetFilmDetail(int Id)
+        public async Task<Film> GetFilmDetail(int Id)
         {
-            return context.Films.Find(Id);
+            return await context.Films.FindAsync(Id);
         }
 
-        public IEnumerable<Film> GetFilmsMetId(SortedSet<int> lijst)
+        public async Task<IEnumerable<Film>> GetFilmsMetId(SortedSet<int> lijst)
         {
-            return context.Films
-                .Where(film => lijst.Contains(film.Id));
+            return await context.Films
+                .Where(film => lijst.Contains(film.Id))
+                .ToListAsync();
         }
 
-        public IEnumerable<Film> GetFilmsVanGenre(int genreId)
+        public async Task<IEnumerable<Film>> GetFilmsVanGenre(int genreId)
         {
-            return context.Films
-                .Where(film => film.GenreId == genreId);
+            return await context.Films
+                .Where(film => film.GenreId == genreId)
+                .ToListAsync();
                 
         }
 
-        public void update(int filmId, int statusGereserveerd)
+        public async Task<Film> update(int filmId, int statusGereserveerd)
         {
-            var item = context.Films.Find(filmId);
-            item.Gereserveerd = statusGereserveerd;
+            Film filmUpdate = await context.Films.FindAsync(filmId);
+            //var item = context.Films.Find(filmId);
+            filmUpdate.Gereserveerd = statusGereserveerd;
             
+            await context.SaveChangesAsync();
+            return filmUpdate;
         }
     }
 }

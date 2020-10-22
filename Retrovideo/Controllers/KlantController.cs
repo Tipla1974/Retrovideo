@@ -10,10 +10,11 @@ using RetroVideoData.Models;
 using RetroVideoServices;
 using Newtonsoft.Json;
 using System.Transactions;
-
+using Retrovideo.Filters;
 
 namespace Retrovideo.Controllers
 {
+    
     public class KlantController : Controller
     {
         private readonly RetrovideoDBContext retrovideoDBContext;
@@ -43,21 +44,20 @@ namespace Retrovideo.Controllers
             return View(new ZoekKlantViewModel());
         }
         public async Task<IActionResult> Zoeknaam(ZoekKlantViewModel form)
-        {if (this.ModelState.IsValid)
+        {
+            if (this.ModelState.IsValid)
             {
-                form.Klanten = await retrovideoDBContext.Klanten
-                    .OrderBy(KlantZoeken => KlantZoeken.Familienaam)
-                    .Where(Deelnaam => Deelnaam.Familienaam.Contains(form.Letters))
-                    .ToListAsync();
+                form.Klanten = (List<Klant>) await klantServices.GetKlanten(form.Letters);
+                    
             }
             return View("Zoekform", form);
         }
-        public IActionResult KlantBevestiging(int Id)
+        public async Task<IActionResult> KlantBevestiging(int Id)
         {
             var mandjeSessionVariablel = HttpContext.Session.GetString("mandje");
             var inmandje = JsonConvert.DeserializeObject<SortedSet<int>>(mandjeSessionVariablel);
             ViewBag.AantalInMandje = inmandje.Count();
-            var klantDetail = klantServices.GetklantInfo(Id);
+            var klantDetail = await klantServices.GetklantInfo(Id);
             return View(new BevestigingViewModel 
             {
                 Id = Id,
@@ -67,39 +67,29 @@ namespace Retrovideo.Controllers
                 Gemeente = klantDetail.Gemeente
             });
         }
-        public IActionResult ReservatieBevestigd(int Id)
+        public async Task<IActionResult> ReservatieBevestigd(int Id)
         {
             var mandjeSessionVariablel = HttpContext.Session.GetString("mandje");
             var inmandje = JsonConvert.DeserializeObject<SortedSet<int>>(mandjeSessionVariablel);
-            var FilmLijst = filmServices.GetFilmInfo(inmandje);
+            var FilmLijst = await filmServices.GetFilmInfo(inmandje);
+            
+            
             ViewBag.geslaagd = false;
-            try
-            {
-
-                var transactionOptions = new TransactionOptions
-                {
-                    IsolationLevel = System.Transactions.IsolationLevel.RepeatableRead
-                };
-                using var transactionScope = new TransactionScope(TransactionScopeOption.Required, transactionOptions);
-                
                 //using var
                 foreach(var film in FilmLijst)
                 {
                     if((film.Voorraad - film.Gereserveerd)> 0)
                     {
+                   
                         var gereserveerdAantal = film.Gereserveerd + 1;
-                        reservatie.Reservatiebijvoegen(film.Id, Id);
-                        filmServices.UpdateRecord(film.Id, gereserveerdAantal);
-                        inmandje.Remove(film.Id);
+
+                    reservatie.Reserveer(film.Id, gereserveerdAantal, Id);
+                    inmandje.Remove(film.Id);
                     }                 
                 }
-                context.SaveChanges();
-                transactionScope.Complete();
-            }
-            catch (Exception)
-            {
-                throw;
-            }
+               
+                
+           
             HttpContext.Session.SetString("mandje", JsonConvert.SerializeObject(inmandje));
             if (inmandje.Count() == 0)
             {
@@ -108,7 +98,7 @@ namespace Retrovideo.Controllers
             }
             else
             {
-                return View(filmServices.GetFilmInfo(inmandje));
+                return View(await filmServices.GetFilmInfo(inmandje));
             }
             
         }

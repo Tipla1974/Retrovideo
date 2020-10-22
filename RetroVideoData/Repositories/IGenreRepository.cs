@@ -2,12 +2,13 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace RetroVideoData.Repositories
 {
     public interface IGenreRepository
     {
-        Genre Get(int id);
-        IEnumerable<Genre> Getall();
+        Task<Genre> Get(int id);
+        Task<IEnumerable<Genre>> Getall();
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using RetroVideoData.Models;
 using RetroVideoData.Repositories;
 
@@ -15,14 +16,14 @@ namespace RetroVideoServices
             this.genresRepository = genresRepository;
         }
 
-        public IEnumerable<Genre> GetAllGenres()
+        public async Task<IEnumerable<Genre>> GetAllGenres()
         {
-            return genresRepository.Getall();
+            return await genresRepository.Getall();
         }
         
-        public Genre GetGenre(int Id)
+        public async Task<Genre> GetGenre(int Id)
         {
-            return genresRepository.Get(Id);
+            return await genresRepository.Get(Id);
         }
     }
 

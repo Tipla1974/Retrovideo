@@ -1,8 +1,10 @@
-﻿using RetroVideoData.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using RetroVideoData.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace RetroVideoData.Repositories
 {
@@ -14,15 +16,16 @@ namespace RetroVideoData.Repositories
         {
             this.context = context;
         }
-        public Genre Get(int Id)
+        public async Task<Genre> Get(int Id)
         {
-            return context.Genres.Find(Id);
+            return await context.Genres.FindAsync(Id);
         }
 
-        public IEnumerable<Genre> Getall()
+        public async Task<IEnumerable<Genre>> Getall()
         {
-            return context.Genres
-                .OrderBy(r => r.Naam) ;
+            return await context.Genres
+                .OrderBy(r => r.Naam)
+                .ToListAsync();
         }
     }
 }

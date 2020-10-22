@@ -22,12 +22,12 @@ namespace Retrovideo.Controllers
 
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             var mandjeSessionVariablel = HttpContext.Session.GetString("mandje");
             var inmandje = JsonConvert.DeserializeObject<SortedSet<int>>(mandjeSessionVariablel);
             // set weer ophalen uit de session
-            return View(filmServices.GetFilmInfo(inmandje)) ;
+            return View( await filmServices.GetFilmInfo(inmandje)) ;
         }
     }
 }

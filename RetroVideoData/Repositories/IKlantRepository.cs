@@ -2,13 +2,15 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace RetroVideoData.Repositories
 {
     public interface IKlantRepository
     {
-        IEnumerable<Klant> Getall(string Letters);
+        Task<IEnumerable<Klant>> Getall(string Letters);
 
-        Klant GetKlantInfo(int Id);
+        Task<Klant> GetKlantInfo(int Id);
+
     }
 }

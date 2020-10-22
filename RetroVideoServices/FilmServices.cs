@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using RetroVideoData.Models;
 using RetroVideoData.Repositories;
 
@@ -15,23 +16,24 @@ namespace RetroVideoServices
             this.filmRepository = filmRepository;
         }
 
-        public Film GetFilmInfo(int filmId)
+        public async Task<Film> GetFilmInfo(int filmId)
         {
-            return filmRepository.GetFilmDetail(filmId);
+            return await filmRepository.GetFilmDetail(filmId);
 
         }
 
-        public IEnumerable<Film> GetAlleFilmsPerGenre(int genreId)
+        public async Task<IEnumerable<Film>> GetAlleFilmsPerGenre(int genreId)
         {
-            return filmRepository.GetFilmsVanGenre(genreId);
+            return await filmRepository.GetFilmsVanGenre(genreId);
         }
-        public IEnumerable<Film> GetFilmInfo(SortedSet<int> lijst)
+        public async Task<IEnumerable<Film>> GetFilmInfo(SortedSet<int> lijst)
         {
-            return filmRepository.GetFilmsMetId(lijst);
+            return await filmRepository.GetFilmsMetId(lijst);
         }
-        public void UpdateRecord(int filmId, int aantalGereserveerd)
+        public async Task<Film> UpdateRecord(int filmId, int aantalGereserveerd)
         {
-            filmRepository.update(filmId, aantalGereserveerd);
+            return await filmRepository.update(filmId, aantalGereserveerd);
+
 
         }
     }

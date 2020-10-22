@@ -2,16 +2,18 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
+
 
 namespace RetroVideoData.Repositories
 {
     public interface IFilmRepository
     {
-        Film GetFilmDetail(int Id);
-        IEnumerable<Film> GetFilmsVanGenre(int genreId);
+        Task<Film> GetFilmDetail(int Id);
+        Task<IEnumerable<Film>> GetFilmsVanGenre(int genreId);
 
-        IEnumerable<Film> GetFilmsMetId(SortedSet<int> lijst);
+        Task<IEnumerable<Film>> GetFilmsMetId(SortedSet<int> lijst);
 
-        void update(int filmId, int statusGereserveerd);
+        Task<Film> update(int filmId, int statusGereserveerd);
     }
 }
