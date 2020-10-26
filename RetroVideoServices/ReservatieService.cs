@@ -8,6 +8,7 @@ using Newtonsoft.Json;
 using System.Threading.Tasks;
 using System.Globalization;
 using System.ComponentModel.Design;
+using System.Data;
 
 namespace RetroVideoServices
 {
@@ -32,25 +33,47 @@ namespace RetroVideoServices
         });
 
 
-        public void Reserveer(int filmId, int gereserveerdAantal, int klantId) 
+        public void Reserveer(IEnumerable<Film> FilmLijst, int klantId) 
         {
-            try
-            {
-                var transactionOptions = new TransactionOptions
-                {
-                    IsolationLevel = System.Transactions.IsolationLevel.RepeatableRead
-                };
-                using var transactionScope = new TransactionScope(TransactionScopeOption.Required, transactionOptions);
-                Task<Reservatie> addReservatie = Reservatiebijvoegen(filmId, klantId);
-                Task<Film> updateFilm = filmServices.UpdateRecord(filmId, gereserveerdAantal);
-                transactionScope.Complete();
-            }
-            catch 
+            
+                                 
+         
+            foreach (var film in FilmLijst)
             {
                 
-            }
-            
 
+                    var gereserveerdAantal = film.Gereserveerd + 1;
+
+                    try
+                    {
+                    if ((film.Voorraad - film.Gereserveerd) == 0)
+                    {
+                        throw new VoorraadException(film.Titel);
+                    }
+                    var transactionOptions = new TransactionOptions
+                        {
+                            IsolationLevel = System.Transactions.IsolationLevel.RepeatableRead
+                        };
+                        using var transactionScope = new TransactionScope(TransactionScopeOption.Required, transactionOptions);
+                        Task<Reservatie> addReservatie = Reservatiebijvoegen(film.Id, klantId);
+                        Task<Film> updateFilm = filmServices.UpdateRecord(film.Id, gereserveerdAantal);
+                        transactionScope.Complete();
+                    }
+                    catch (VoorraadException)
+                    {
+                        
+                        
+                    }
+                
+            }
+        }
+    }
+    [Serializable]
+    public class VoorraadException : Exception
+    {
+        public VoorraadException(string message) : base(message)
+        {
+               
         }
     }
 }

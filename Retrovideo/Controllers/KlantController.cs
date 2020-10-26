@@ -72,35 +72,11 @@ namespace Retrovideo.Controllers
             var mandjeSessionVariablel = HttpContext.Session.GetString("mandje");
             var inmandje = JsonConvert.DeserializeObject<SortedSet<int>>(mandjeSessionVariablel);
             var FilmLijst = await filmServices.GetFilmInfo(inmandje);
-            
-            
-            ViewBag.geslaagd = false;
-                //using var
-                foreach(var film in FilmLijst)
-                {
-                    if((film.Voorraad - film.Gereserveerd)> 0)
-                    {
-                   
-                        var gereserveerdAantal = film.Gereserveerd + 1;
-
-                    reservatie.Reserveer(film.Id, gereserveerdAantal, Id);
-                    inmandje.Remove(film.Id);
-                    }                 
-                }
-               
-                
+            reservatie.Reserveer(FilmLijst, Id);
+            return View(await filmServices.GetFilmInfo(inmandje));
            
-            HttpContext.Session.SetString("mandje", JsonConvert.SerializeObject(inmandje));
-            if (inmandje.Count() == 0)
-            {
-                ViewBag.geslaagd = true;
-                return View();
-            }
-            else
-            {
-                return View(await filmServices.GetFilmInfo(inmandje));
-            }
             
         }
     }
+
 }
