@@ -72,8 +72,8 @@ namespace Retrovideo.Controllers
             var mandjeSessionVariablel = HttpContext.Session.GetString("mandje");
             var inmandje = JsonConvert.DeserializeObject<SortedSet<int>>(mandjeSessionVariablel);
             var FilmLijst = await filmServices.GetFilmInfo(inmandje);
-            reservatie.Reserveer(FilmLijst, Id);
-            return View(await filmServices.GetFilmInfo(inmandje));
+            
+            return View(reservatie.Reserveer(FilmLijst, Id));
            
             
         }
